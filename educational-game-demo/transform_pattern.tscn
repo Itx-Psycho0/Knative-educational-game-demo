@@ -1,0 +1,142 @@
+[gd_scene load_steps=15 format=3 uid="uid://c5rfj2hms1ytj"]
+
+[ext_resource type="Texture2D" uid="uid://crbbdu26tlg2k" path="res://2D Assets/background.png" id="1_3qsrb"]
+[ext_resource type="Script" path="res://Scripts/transformPattern.gd" id="1_aqirs"]
+[ext_resource type="Texture2D" uid="uid://dlnjpu1sbekqf" path="res://2D Assets/conveyer texture.png" id="2_6ejgm"]
+[ext_resource type="Script" path="res://Scripts/conveyor.gd" id="3_nqfkm"]
+[ext_resource type="PackedScene" uid="uid://p2kk0a6bpmai" path="res://Scenes/event_box.tscn" id="4_r13pd"]
+[ext_resource type="Texture2D" uid="uid://isfnvlbckumn" path="res://2D Assets/boxes/blueBoxYellowRectangle.png" id="5_nqe7e"]
+[ext_resource type="Texture2D" uid="uid://0y2j2aj55dyu" path="res://2D Assets/transformation/transformer_machine.png" id="6_o8afn"]
+[ext_resource type="Script" path="res://Scripts/transformer.gd" id="7_jyp2w"]
+[ext_resource type="Texture2D" uid="uid://b1a6exyrgtp6b" path="res://2D Assets/boxes/blueBoxPinkRectangle.png" id="8_034a3"]
+[ext_resource type="PackedScene" uid="uid://whu4rwgsyl8u" path="res://Scenes/sink.tscn" id="9_meu53"]
+[ext_resource type="Script" path="res://Scripts/restart.gd" id="10_dakgn"]
+[ext_resource type="Script" path="res://Scripts/event_button.gd" id="11_fphw7"]
+[ext_resource type="PackedScene" uid="uid://bquha0225l1ju" path="res://Scenes/draggable_filter_blue.tscn" id="12_231xi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i7ftx"]
+size = Vector2(150, 200)
+
+[node name="transformPattern" type="Node2D"]
+script = ExtResource("1_aqirs")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -4
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_3qsrb")
+
+[node name="Conveyor" type="Line2D" parent="."]
+z_index = -1
+points = PackedVector2Array(570, 94, 577, 559)
+width = 100.0
+texture = ExtResource("2_6ejgm")
+texture_mode = 1
+script = ExtResource("3_nqfkm")
+
+[node name="Conveyor2" type="Line2D" parent="."]
+points = PackedVector2Array(598, 94)
+width = 100.0
+texture = ExtResource("2_6ejgm")
+texture_mode = 1
+script = ExtResource("3_nqfkm")
+
+[node name="BoxEvent" parent="." instance=ExtResource("4_r13pd")]
+position = Vector2(576, 80)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_nqe7e")
+boxType = "Yellow"
+
+[node name="Transformer" type="Node2D" parent="."]
+position = Vector2(800, 300)
+
+[node name="Sprite2D" type="Sprite2D" parent="Transformer"]
+texture = ExtResource("6_o8afn")
+
+[node name="Area2D" type="Area2D" parent="Transformer"]
+script = ExtResource("7_jyp2w")
+output_box_texture = ExtResource("8_034a3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transformer/Area2D"]
+shape = SubResource("RectangleShape2D_i7ftx")
+
+[node name="hoverlabel" type="RichTextLabel" parent="Transformer/Area2D"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+text = "[center][b]TRANSFORMER"
+
+[node name="Sink" parent="." instance=ExtResource("9_meu53")]
+position = Vector2(576, 550)
+scale = Vector2(0.6, 0.6)
+expectedType = "Pink"
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 893.0
+offset_top = 517.0
+offset_right = 933.0
+offset_bottom = 557.0
+scale = Vector2(0.7, 0.7)
+script = ExtResource("10_dakgn")
+
+[node name="Button" type="Button" parent="Control2"]
+layout_mode = 0
+offset_right = 342.0
+offset_bottom = 132.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Button"]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 338.0
+offset_bottom = 110.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]RESTART"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 893.0
+offset_top = 398.0
+offset_right = 933.0
+offset_bottom = 438.0
+scale = Vector2(0.7, 0.7)
+script = ExtResource("11_fphw7")
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 342.0
+offset_bottom = 132.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Button"]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 338.0
+offset_bottom = 110.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]START"
+
+[node name="Draggable Filter" parent="." instance=ExtResource("12_231xi")]
+position = Vector2(350, 300)
+
+[node name="hoverlabel" type="RichTextLabel" parent="Draggable Filter"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="area_entered" from="Transformer/Area2D" to="Transformer/Area2D" method="_on_area_entered"]
+[connection signal="mouse_entered" from="Transformer/Area2D" to="Transformer/Area2D" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Transformer/Area2D" to="Transformer/Area2D" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control2/Button" to="Control2" method="_on_button_pressed"]
+[connection signal="pressed" from="Control/Button" to="Control" method="_on_button_pressed"]
