@@ -3,8 +3,6 @@ extends Sprite2D
 @export var boxType: String
 @export var sending = false
 
-
-
 func _ready() -> void:
 	print("event ready")
 	print("event is color", boxType)

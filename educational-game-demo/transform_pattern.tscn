@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bquha0225l1ju" path="res://Scenes/draggable_filter_blue.tscn" id="12_231xi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i7ftx"]
-size = Vector2(150, 200)
+size = Vector2(74, 102.5)
 
 [node name="transformPattern" type="Node2D"]
 script = ExtResource("1_aqirs")
@@ -28,29 +28,31 @@ mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -6.0
+offset_top = 2.0
+offset_right = 1914.0
+offset_bottom = 1082.0
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_3qsrb")
 
 [node name="Conveyor" type="Line2D" parent="."]
 z_index = -1
-points = PackedVector2Array(570, 94, 577, 559)
+points = PackedVector2Array(586, 52)
 width = 100.0
 texture = ExtResource("2_6ejgm")
 texture_mode = 1
 script = ExtResource("3_nqfkm")
 
 [node name="Conveyor2" type="Line2D" parent="."]
-points = PackedVector2Array(598, 94)
+points = PackedVector2Array(575, 67)
 width = 100.0
 texture = ExtResource("2_6ejgm")
 texture_mode = 1
 script = ExtResource("3_nqfkm")
 
 [node name="BoxEvent" parent="." instance=ExtResource("4_r13pd")]
-position = Vector2(576, 80)
-scale = Vector2(0.6, 0.6)
+position = Vector2(585, 69)
+scale = Vector2(0.397087, 0.399585)
 texture = ExtResource("5_nqe7e")
 boxType = "Yellow"
 
@@ -58,13 +60,17 @@ boxType = "Yellow"
 position = Vector2(800, 300)
 
 [node name="Sprite2D" type="Sprite2D" parent="Transformer"]
+position = Vector2(23, -25)
+scale = Vector2(0.58, 0.545852)
 texture = ExtResource("6_o8afn")
 
 [node name="Area2D" type="Area2D" parent="Transformer"]
+position = Vector2(-9, 18.5)
 script = ExtResource("7_jyp2w")
 output_box_texture = ExtResource("8_034a3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transformer/Area2D"]
+position = Vector2(33, -38.5)
 shape = SubResource("RectangleShape2D_i7ftx")
 
 [node name="hoverlabel" type="RichTextLabel" parent="Transformer/Area2D"]
@@ -74,8 +80,8 @@ offset_bottom = 40.0
 text = "[center][b]TRANSFORMER"
 
 [node name="Sink" parent="." instance=ExtResource("9_meu53")]
-position = Vector2(576, 550)
-scale = Vector2(0.6, 0.6)
+position = Vector2(583, 574)
+scale = Vector2(0.29768, 0.333766)
 expectedType = "Pink"
 
 [node name="Control2" type="Control" parent="."]
@@ -129,9 +135,10 @@ bbcode_enabled = true
 text = "[center]START"
 
 [node name="Draggable Filter" parent="." instance=ExtResource("12_231xi")]
-position = Vector2(350, 300)
+position = Vector2(323, 291)
+scale = Vector2(0.6, 0.6)
 
-[node name="hoverlabel" type="RichTextLabel" parent="Draggable Filter"]
+[node name="hoverlabel2" type="RichTextLabel" parent="Draggable Filter"]
 offset_right = 40.0
 offset_bottom = 40.0
 

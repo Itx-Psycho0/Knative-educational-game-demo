@@ -23,9 +23,13 @@ func _input_event(viewport, event, shape_idx) -> void:
 		if ConveyerController.selected != null:
 			print("Transformer clicked - routing event here")
 			AudioManager.play_click_end()
-			# Add transformer position as a destination
+			# Tell controller: don't end the level after this delivery
+			ConveyerController.awaiting_transform = true
+			# Add transformer position as destination
 			ConveyerController.destination.append(get_parent().position)
 			ConveyerController.create_conveyor()
+		else:
+			print("No event selected! Click the event box FIRST, then click here.")
 
 # When an event box enters the transformer's area
 func _on_area_entered(area: Area2D) -> void:
@@ -54,10 +58,12 @@ func _on_area_entered(area: Area2D) -> void:
 
 		print("Event transformed to: ", output_color)
 
-		# Make the event clickable again for the next routing step
-		event_sprite.sending = false
-
 		# Flash effect to show transformation
 		var tween = get_tree().create_tween()
 		tween.tween_property(event_sprite, "modulate", Color(1.5, 1.5, 1.5, 1), 0.2)
 		tween.tween_property(event_sprite, "modulate", Color(1, 1, 1, 1), 0.2)
+		await tween.finished
+
+		# Reset controller for Phase 2: player routes transformed event to Sink
+		ConveyerController.reset_for_phase2()
+		event_sprite.sending = false
